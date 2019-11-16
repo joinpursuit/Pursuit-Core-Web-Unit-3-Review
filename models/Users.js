@@ -1,4 +1,4 @@
-const { db, errors } = require('./pgp');
+const { db, errors } = require('../db/index.js');
 
 const createUser = async (user) => {
   try {

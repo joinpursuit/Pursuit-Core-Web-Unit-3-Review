@@ -1,11 +1,8 @@
-const Users = require('./users');
-const Todos = require('./todos');
-const Winners = require('./winners');
-const Helpers = require('./helpers');
+const pgp = require('pg-promise')();
+const connectionString = process.env.DATABASE_URL || "postgres://localhost:5432/just_todo_it_db";
 
 module.exports = {
-  Users,
-  Todos,
-  Winners,
-  Helpers
+  helpers: pgp.helpers,
+  errors: pgp.errors,
+  db: pgp(connectionString)
 }

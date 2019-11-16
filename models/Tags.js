@@ -1,4 +1,4 @@
-const { db } = require("./pgp");
+const { db } = require("../db/index.js");
 
 const createTag = (newTag) => {
   return db.one(
@@ -8,5 +8,5 @@ const createTag = (newTag) => {
 }
 
 module.exports = {
-  createTag 
+  createTag
 };

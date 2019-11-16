@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { Todos, Helpers } = require("../db");
+
+const Todos = require("../models/Todos");
+const helpers = require("../db/helpers")
 
 router.get('/', async (req, res, next) => {
   const queryParams = req.query;
@@ -17,11 +19,11 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   const newTodo = {
-    id: Helpers.genId(),
+    id: helpers.genId(),
     ...req.body
   }
   const expectedProps = ["owner", "text"];
-  const missingProps = Helpers.missingProps(expectedProps, newTodo)
+  const missingProps = helpers.missingProps(expectedProps, newTodo)
 
   if (missingProps.length) {
     return res.status(400).json({
@@ -124,7 +126,7 @@ router.put('/:id', async (req, res, next) => {
   const { id } = req.params;
   const todo_edits = req.body
   const expectedProps = ["owner", "text", "completed"];
-  const missingProps = Helpers.missingProps(expectedProps, todo_edits)
+  const missingProps = helpers.missingProps(expectedProps, todo_edits)
 
   if (missingProps.length) {
     return res.status(400).json({
@@ -135,7 +137,7 @@ router.put('/:id', async (req, res, next) => {
 
   try {
     const todo = await Todos.getTodo(id);
-    
+
     if (todo) { // Todo already exits, trying to update
       const updatedTodo = await Todos.updateTodo(id, todo_edits);
       if (!updatedTodo) {
@@ -155,16 +157,16 @@ router.put('/:id', async (req, res, next) => {
       const newTodo = await Todos.createTodo({
         id,
         ...todo_edits
-      });      
+      });
       return res.status(201).json({
         payload: newTodo,
         err: false
       })
     }
 
-   } catch (err) {
-      next(err)
-    }
+  } catch (err) {
+    next(err)
+  }
 });
 
 router.all('/', (req, res, next) => {

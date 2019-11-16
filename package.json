@@ -3,15 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "start:dev": "nodemon ./bin/www"
+    "start": "nodemon app.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "debug": "~2.6.9",
     "express": "~4.16.0",
-    "morgan": "~1.9.0",
     "pg-promise": "^8.7.3",
+    "cors": "^2.8.5",
+    "morgan": "~1.9.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

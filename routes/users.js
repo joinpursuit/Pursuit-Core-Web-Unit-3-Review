@@ -1,6 +1,7 @@
-let express = require('express');
-let router = express.Router();
-let { Users, Helpers } = require('../db');
+const express = require('express');
+const router = express.Router();
+
+const Users = require('../models/Users');
 
 router.post("/signup", async (req, res, next) => {
   const { username } = req.body;
@@ -63,12 +64,5 @@ router.get('/:username', async (req, res, next) => {
     next(err)
   }
 });
-
-router.all('/', (req, res, next) => {
-  res.status(405).json({
-    payload: "Nah, nah, nah",
-    err: true
-  })
-})
 
 module.exports = router;
