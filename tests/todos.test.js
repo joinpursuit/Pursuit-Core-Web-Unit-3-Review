@@ -125,7 +125,7 @@ describe('Todos functionality and routes', () => {
       })
   })
 
-  it('[GET] to /todos with `username` query params retrieves all todos belonging to `username`', (done) => {
+  it('[GET] to /todos with `owner` query params retrieves all todos belonging to `owner`', (done) => {
     expect.assertions(4)
 
     request(app)
