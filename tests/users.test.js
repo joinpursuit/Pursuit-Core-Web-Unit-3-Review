@@ -58,15 +58,17 @@ describe('User functionality and routes', () => {
   })
 
   it('[GET] to /users - Should get all users', (done) => {
-    expect.assertions(3)
+    expect.assertions(4)
     request(app)
       .get('/users')
       .end((err, res) => {
         if (err) throw err
-        expect(res.status).toBe(200)
-
+        const statusCode = res.status;
         const data = res.body
+
+        expect(statusCode).toBe(200)
         expect(data.payload).toEqual(expect.any(Array))
+        expect(data.payload.length).toBe(2)
         expect(data.err).toBeFalsy()
         done()
       })
