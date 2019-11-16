@@ -259,4 +259,8 @@ describe('Todos functionality and routes', () => {
         done()
       })
   })
+
+  // TODO test deleting a non-existent todo
+  // TODO test PUT with a non-existent owner
+  // TODO fix put with completed true case mentioned above
 })
