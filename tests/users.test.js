@@ -73,4 +73,19 @@ describe('User functionality and routes', () => {
         done()
       })
   })
+
+  it('[POST] to /users/signup without `username` in body data should return bad request error', (done) => {
+    expect.assertions(2)
+    request(app)
+      .post('/users/signup')
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status;
+        const data = res.body
+
+        expect(statusCode).toBe(400)
+        expect(data.err).toBeTruthy()
+        done()
+      })
+  })
 })
