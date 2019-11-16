@@ -8,7 +8,7 @@ beforeAll(() => {
 })
 
 describe('User functionality and routes', () => {
-  it('[POST] to /users - Should add a new user', (done) => {
+  it('[POST] to /users/signup - Should add a new user', (done) => {
     expect.assertions(4)
     request(app)
       .post('/users/signup')
