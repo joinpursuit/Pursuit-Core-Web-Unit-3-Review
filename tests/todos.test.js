@@ -60,4 +60,21 @@ describe('Todos functionality and routes', () => {
         done()
       })
   })
+
+  it('[POST] to /todos without a `owner` or `text` body data should return error', (done) => {
+    expect.assertions(2)
+
+    request(app)
+      .post('/todos')
+      .send({})
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status
+        const data = res.body
+
+        expect(statusCode).toBe(400)
+        expect(data.err).toBeTruthy()
+        done()
+      })
+  })
 })
