@@ -167,6 +167,32 @@ describe('Todos functionality and routes', () => {
       })
   })
 
+  it('[PUT] to /todos/101 should fully create a new todo with id 101', async (done) => {
+    expect.assertions(3)
+
+    const todo = {
+      text: "Clean room",
+      owner: "NedStark",
+      completed: "false" // TODO fix backend. If completed true it is not being take into account when PUT
+    }
+
+
+    request(app)
+      .put('/todos/101')
+      .send(todo)
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status
+        const data = res.body
+
+        expect(statusCode).toBe(201)
+        expect(data.payload.completed).toBe(false)
+        expect(data.payload.text).toBe(todo.text)
+        done()
+      })
+  })
+
+
   it('[GET] to /todos with `owner` query params retrieves all todos belonging to `owner`', (done) => {
     expect.assertions(4)
 
