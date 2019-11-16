@@ -9,12 +9,12 @@ CREATE DATABASE just_todo_it_db;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR UNIQUE NOT NULL 
+  username VARCHAR NOT NULL 
 );
 
 CREATE TABLE todos (
   id VARCHAR PRIMARY KEY,
-  owner VARCHAR REFERENCES users(username),
+  owner VARCHAR,
   text VARCHAR NOT NULL,
   completed BOOLEAN DEFAULT FALSE
 );

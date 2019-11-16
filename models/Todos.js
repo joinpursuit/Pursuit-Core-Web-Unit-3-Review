@@ -60,7 +60,7 @@ const createTodo = async (todo) => {
 const removeTodo = async (id) => {
   let todo;
   try {
-    todo = await db.one(`DELETE FROM todos WHERE id = $/id/ RETURNING *`, { id });
+    todo = await db.any(`DELETE FROM todos`, { id });
     return todo;
   } catch (err) {
     if (err instanceof errors.QueryResultError &&

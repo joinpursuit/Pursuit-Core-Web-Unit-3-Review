@@ -5,6 +5,7 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const todosRouter = require('./routes/todos');
+const tagsRouter = require('./routes/tags');
 
 const app = express();
 const PORT = 3100;
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter)
 app.use('/users', usersRouter);
 app.use('/todos', todosRouter);
+app.use('/tags', tagsRouter);
 
 
 // catch 404 and forward to error handler

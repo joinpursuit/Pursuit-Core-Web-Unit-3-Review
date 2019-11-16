@@ -86,12 +86,7 @@ router.delete('/:id', async (req, res, next) => {
       })
     }
 
-    res.status(404).json({
-      payload: {
-        msg: "Todo not found"
-      },
-      err: true
-    })
+    res.status(418).json({})
   } catch (err) {
     next(err)
   }
