@@ -200,7 +200,6 @@ describe('Todos functionality and routes', () => {
       completed: "true"
     }
 
-
     request(app)
       .patch('/todos/101')
       .send(todo)
@@ -211,6 +210,30 @@ describe('Todos functionality and routes', () => {
 
         expect(statusCode).toBe(200)
         expect(data.payload.text).toBe(todo.text)
+        expect(data.payload.owner).toBe("NedStark")
+        expect(data.payload.completed).toBe(true)
+        done()
+      })
+  })
+
+  it('[DELETE] to /todos/101 should remove todo with id 101', async (done) => {
+    expect.assertions(5)
+
+    const removedTodoProps = {
+      text: "Clean Patio",
+      completed: "true"
+    }
+
+    request(app)
+      .delete('/todos/101')
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status
+        const data = res.body
+
+        expect(statusCode).toBe(200)
+        expect(data.payload.text).toBe(removedTodoProps.text)
+        expect(data.payload.id).toBe("101")
         expect(data.payload.owner).toBe("NedStark")
         expect(data.payload.completed).toBe(true)
         done()
