@@ -124,4 +124,23 @@ describe('Todos functionality and routes', () => {
         done()
       })
   })
+
+  it('[GET] to /todos with `username` query params retrieves all todos belonging to `username`', (done) => {
+    expect.assertions(4)
+
+    request(app)
+      .get('/todos')
+      .query({ owner: 'JonSnow123' })
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status
+        const data = res.body
+
+        expect(statusCode).toBe(200)
+        expect(data.payload).toEqual(expect.any(Array))
+        expect(data.payload.length).toBe(3)
+        expect(data.err).toBeFalsy()
+        done()
+      })
+  })
 })
