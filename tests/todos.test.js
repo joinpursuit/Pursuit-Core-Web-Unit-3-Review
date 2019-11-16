@@ -192,6 +192,31 @@ describe('Todos functionality and routes', () => {
       })
   })
 
+  it('[PATCH] to /todos/101 should update text and set completed to true on todo 101', async (done) => {
+    expect.assertions(4)
+
+    const todo = {
+      text: "Clean Patio",
+      completed: "true"
+    }
+
+
+    request(app)
+      .patch('/todos/101')
+      .send(todo)
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status
+        const data = res.body
+
+        expect(statusCode).toBe(200)
+        expect(data.payload.text).toBe(todo.text)
+        expect(data.payload.owner).toBe("NedStark")
+        expect(data.payload.completed).toBe(true)
+        done()
+      })
+  })
+
 
   it('[GET] to /todos with `owner` query params retrieves all todos belonging to `owner`', (done) => {
     expect.assertions(4)
