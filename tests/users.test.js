@@ -39,7 +39,7 @@ describe('User functionality and routes', () => {
       })
   })
 
-  it('[POST] to /users - Adding a second new user should succed', (done) => {
+  it('[POST] to /users - Adding a second new user should succeeds', (done) => {
     expect.assertions(4)
     request(app)
       .post('/users/signup')
