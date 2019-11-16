@@ -38,4 +38,26 @@ describe('Todos functionality and routes', () => {
       })
   })
 
+  it('[POST] to /todos without a pre-registered owner should return error', (done) => {
+    expect.assertions(2)
+
+    const todoText = "2nd Todo"
+    const todoOwner = "AryaStark"
+
+    request(app)
+      .post('/todos')
+      .send({
+        text: todoText,
+        owner: todoOwner
+      })
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status
+        const data = res.body
+
+        expect(statusCode).toBe(400)
+        expect(data.err).toBeTruthy()
+        done()
+      })
+  })
 })
