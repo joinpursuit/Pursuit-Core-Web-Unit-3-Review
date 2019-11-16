@@ -125,6 +125,48 @@ describe('Todos functionality and routes', () => {
       })
   })
 
+  it('[PUT] to /todos/:id should fully update/replace a todo', async (done) => {
+    expect.assertions(5)
+
+    const addTodoToBeUpdated = async () => {
+      const todo = {
+        text: "Clean room",
+        owner: "NedStark",
+      }
+
+      try {
+        let { body } = await request(app)
+          .post('/todos')
+          .send(todo)
+        return body.payload
+      } catch (err) {
+        throw err
+      }
+    }
+
+    let todoToUpdate = await addTodoToBeUpdated();
+
+    request(app)
+      .put(`/todos/${todoToUpdate.id}`)
+      .send({
+        text: 'Clean Castle',
+        owner: 'NedStark',
+        completed: true
+      })
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status
+        const data = res.body
+
+        expect(statusCode).toBe(200)
+        expect(data.payload.id).toBe(todoToUpdate.id)
+        expect(data.payload.completed).toBe(true)
+        expect(data.payload.text).toBe("Clean Castle")
+        expect(data.err).toBeFalsy()
+        done()
+      })
+  })
+
   it('[GET] to /todos with `owner` query params retrieves all todos belonging to `owner`', (done) => {
     expect.assertions(4)
 
