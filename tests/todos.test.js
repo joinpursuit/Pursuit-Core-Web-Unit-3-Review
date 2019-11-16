@@ -2,10 +2,39 @@ const app = require('../app'); const request = require('supertest');
 const Users = require('../models/Users')
 const resetDB = require('./resetDB');
 
+const addFewTodos = async () => {
+  const todos = [
+    {
+      text: "Buy milk",
+      owner: "JonSnow123",
+    },
+    {
+      text: "Do Laundry",
+      owner: "NedStark",
+    },
+    {
+      text: "Pay Energy bill",
+      owner: "JonSnow123",
+    }
+  ]
+
+  let promises = []
+  for (let todo of todos) {
+    promises.push(
+      request(app)
+        .post('/todos')
+        .send(todo)
+    )
+  }
+  await Promise.all(promises)
+}
+
 beforeAll(async () => {
   try {
     await resetDB();
     await Users.createUser({ username: "JonSnow123" })
+    await Users.createUser({ username: "NedStark" })
+    await addFewTodos()
   } catch (err) {
     throw err
   }
@@ -74,6 +103,24 @@ describe('Todos functionality and routes', () => {
 
         expect(statusCode).toBe(400)
         expect(data.err).toBeTruthy()
+        done()
+      })
+  })
+
+  it('[GET] to /todos Retrieves all todos and returns them in an array', (done) => {
+    expect.assertions(4)
+
+    request(app)
+      .get('/todos')
+      .end((err, res) => {
+        if (err) throw err
+        const statusCode = res.status
+        const data = res.body
+
+        expect(statusCode).toBe(200)
+        expect(data.payload).toEqual(expect.any(Array))
+        expect(data.payload.length).toBe(4)
+        expect(data.err).toBeFalsy()
         done()
       })
   })
