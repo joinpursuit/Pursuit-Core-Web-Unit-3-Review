@@ -74,11 +74,13 @@ The team wants to add the ability to tag todos. For instance a todo `Buy Milk` c
 * Make the edit to add two tables to the database. 
   * The `tags` table will store tags. Tags have only `id`, `owner` and `name` properties/columns. The `id` should be given by the database.
   * The `todos_tags` is what is known as a join table. This table will store the relationship between todos and tags. A row of this table should look like:
+
   | id  | todo_id | tag_id |
   | --- | ------- | ------ |
   | 1   | 1       | 2      |
   | 2   | 3       | 4      |
   | 3   | 5       | 2      |
+  
   **Note** This is necessary because a todo can have multiple tags and a tag can have multiple todos.
 * The router for `/tags` is in place but currently doesn't handle any requests. 
   * Implement `POST` `/tags` to retrieve create a new tag. Remember to that tags need to have `name` and `owner`
