@@ -18,9 +18,15 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
+  // const newTodo = {
+  //   id: helpers.genId(),
+  //   ...req.body
+  // }
+
   const newTodo = {
     id: helpers.genId(),
-    ...req.body
+    owner: req.body.owner,
+    text: req.body.text
   }
   const expectedProps = ["owner", "text"];
   const missingProps = helpers.missingProps(expectedProps, newTodo)
@@ -86,7 +92,10 @@ router.delete('/:id', async (req, res, next) => {
       })
     }
 
-    res.status(418).json({})
+    res.status(404).json({
+      payload: "Todo not found",
+      err: true
+    })
   } catch (err) {
     next(err)
   }
